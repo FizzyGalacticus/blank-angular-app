@@ -2,6 +2,7 @@ angular.module('angularApp.controllers', [])
 
 .controller('MainCtrl', function ($scope, $location) {
     $scope.name = 'MainCtrl';
+    $scope.navCollapsed = true;
 
     $scope.changeView = function(view) {
         $location.path(view);
