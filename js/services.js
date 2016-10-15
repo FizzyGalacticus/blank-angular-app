@@ -1,6 +1,5 @@
 angular.module('angularApp.services', [])
 
-//Get IP Address
 .factory('$someService', ['$http', function($http) {
     var someServiceFunction = function(callback) {
         if(callback)
@@ -9,4 +8,3 @@ angular.module('angularApp.services', [])
 
     return {'someServiceFunction':someServiceFunction};
 }]);
-
