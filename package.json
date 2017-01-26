@@ -1,0 +1,40 @@
+{
+  "name": "blank-angular-app",
+  "version": "1.0.0",
+  "description": "A blank angular application",
+  "main": "index.html",
+  "dependencies": {
+    "bower": "^1.7.9",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-csslint": "^1.0.0",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-eslint": "^3.0.1",
+    "gulp-htmllint": "0.0.11",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-imagemin": "^3.0.3",
+    "gulp-jshint": "^2.0.1",
+    "gulp-ngmin": "^0.3.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "jshint": "^2.9.3",
+    "node-wolfram": "^0.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FizzyGalacticus/blank-angular-app.git"
+  },
+  "keywords": [
+    "blank-angular-app"
+  ],
+  "author": "Dustin L. Dodson",
+  "license": "Apache2.0",
+  "bugs": {
+    "url": "https://github.com/FizzyGalacticus/blank-angular-app/issues"
+  },
+  "homepage": "https://github.com/FizzyGalacticus/blank-angular-app#readme"
+}
