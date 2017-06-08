@@ -1,26 +1,36 @@
-var gulp     = require('gulp'),
-	concat   = require('gulp-concat'),
-	uglify   = require('gulp-uglify'),
-	rename   = require('gulp-rename'),
-	csslint  = require('gulp-csslint'),
-	jshint   = require('gulp-jshint'),
-	htmllint = require('gulp-htmllint'),
-	htmlmin  = require('gulp-htmlmin'),
-	imagemin = require('gulp-imagemin'),
-	cssmin   = require('gulp-cssmin');
+var gulp       = require('gulp'),
+	plumber    = require('gulp-plumber'),
+	babelify   = require('babelify'),
+	browserify = require('browserify'),
+	source     = require('vinyl-source-stream'),
+	concat     = require('gulp-concat'),
+	uglify     = require('gulp-uglify'),
+	rename     = require('gulp-rename'),
+	htmlmin    = require('gulp-htmlmin'),
+	imagemin   = require('gulp-imagemin'),
+	cssmin     = require('gulp-cssmin');
 
 gulp.task('script-min', function() {
-	gulp.src('www/js/**/*.js')
-	// .pipe(jshint())
-	.pipe(concat('app.js'))
-	.pipe(uglify())
+	browserify('www/js/app.js')
+	.transform('babelify', {
+		presets: ['es2015', 'es2016', 'es2017'],
+		plugins: ['angularjs-annotate']
+	})
+	.bundle()
+	.pipe(source('app.js'))
+	.pipe(plumber())
+    .pipe(gulp.dest('dist/js'));
+
+    gulp.src(['dist/js/app.js'])
+    .pipe(plumber())
+    .pipe(uglify())
 	.pipe(rename({suffix:'.min'}))
     .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('html-min', function() {
 	gulp.src('www/**/*.html')
-	// .pipe(htmllint())
+	.pipe(plumber())
 	.pipe(htmlmin({
 		collapseWhitespace: true,
 		minifyURLs: true,
@@ -37,7 +47,7 @@ gulp.task('html-min', function() {
 
 gulp.task('css-min', function() {
 	gulp.src('www/css/**/*.css')
-	// .pipe(csslint())
+	.pipe(plumber())
 	.pipe(concat('app.css'))
 	.pipe(cssmin())
 	.pipe(rename({suffix:'.min'}))
@@ -52,11 +62,13 @@ gulp.task('fonts', function() {
 			  fontDir + '*.woff2', 
 			  fontDir + '*.svg', 
 			  fontDir + '*.eot'])
+	.pipe(plumber())
 	.pipe(gulp.dest('dist/fonts'));
 });
 
 gulp.task('image-min', function() {
 	gulp.src('www/img/**/*')
+	.pipe(plumber())
 	.pipe(imagemin())
 	.pipe(gulp.dest('dist/img'));
 });
