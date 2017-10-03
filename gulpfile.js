@@ -1,15 +1,16 @@
-var gulp       = require('gulp'),
-	plumber    = require('gulp-plumber'),
-	browserify = require('browserify'),
-	source     = require('vinyl-source-stream'),
-	buffer     = require('vinyl-buffer'),
-	concat     = require('gulp-concat'),
-	uglify     = require('gulp-uglify'),
-	rename     = require('gulp-rename'),
-	htmlmin    = require('gulp-htmlmin'),
-	imagemin   = require('gulp-imagemin'),
-	cssmin     = require('gulp-cssmin'),
-	sequence   = require('gulp-sequence');
+let gulp         = require('gulp'),
+	plumber      = require('gulp-plumber'),
+	browserify   = require('browserify'),
+	sass         = require('gulp-sass'),
+	autoprefixer = require('gulp-autoprefixer'),
+	source       = require('vinyl-source-stream'),
+	concat       = require('gulp-concat'),
+	minify       = require('gulp-babel-minify'),
+	rename       = require('gulp-rename'),
+	htmlmin      = require('gulp-htmlmin'),
+	imagemin     = require('gulp-imagemin'),
+	cssmin       = require('gulp-cssmin'),
+	sequence     = require('gulp-sequence');
 
 gulp.task('compile-scripts', function() {
 	return browserify('www/js/app.js')
@@ -26,7 +27,7 @@ gulp.task('compile-scripts', function() {
 gulp.task('min-scripts', function() {
 	return gulp.src(['dist/js/app.js'])
 	.pipe(plumber())
-	.pipe(uglify())
+	.pipe(minify())
 	.pipe(rename({suffix:'.min'}))
     .pipe(gulp.dest('dist/js'));
 });
@@ -48,9 +49,14 @@ gulp.task('min-html', function() {
 	.pipe(gulp.dest('dist'));
 });
 
-gulp.task('min-css', function() {
-	return gulp.src('www/css/**/*.css')
+gulp.task('sass', function () {
+	return gulp.src(['www/sass/**/*.scss', 'www/sass/**/*.css', 'www/css/**/*.css'])
 	.pipe(plumber())
+	.pipe(sass())
+	.pipe(sass.sync())
+	.pipe(autoprefixer({
+		browsers: ['last 3 versions']
+	}))
 	.pipe(concat('app.css'))
 	.pipe(cssmin())
 	.pipe(rename({suffix:'.min'}))
@@ -81,7 +87,7 @@ gulp.task('prod', function() {
 });
 
 gulp.task('all', function(callback) {
-	sequence('prod', 'compile-scripts', 'min-scripts', ['min-html', 'min-css', 'fonts'])(callback);
+	sequence('prod', 'compile-scripts', 'min-scripts', ['min-html', 'sass', 'fonts'])(callback);
 });
 
 gulp.task('watch', function() {
