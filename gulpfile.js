@@ -15,7 +15,7 @@ let gulp         = require('gulp'),
 gulp.task('compile-scripts', function() {
 	return browserify('www/js/app.js')
 	.transform('babelify', {
-		presets: ['es2015', 'es2016', 'es2017'],
+		presets: ['env'],
 		plugins: ['angularjs-annotate']
 	})
 	.bundle()
@@ -64,7 +64,7 @@ gulp.task('sass', function () {
 });
 
 gulp.task('fonts', function() {
-	var fontDir = 'www/fonts/';
+	let fontDir = 'www/fonts/';
 	return gulp.src([fontDir + '*.ttf',
 			  fontDir + '*.oft', 
 			  fontDir + '*.woff', 
