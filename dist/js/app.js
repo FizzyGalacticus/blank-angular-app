@@ -18,15 +18,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var angularApp = angular.module('angularApp', ['ui.bootstrap', 'ngRoute', 'ngAnimate', 'ngTouch']).service('TestService', _TestService2.default).controller('MainCtrl', _MainController2.default).controller('HomeCtrl', _HomeController2.default);
 
 angularApp.config(['$routeProvider', function ($routeProvider) {
-    'ngInject';
+	'ngInject';
 
-    $routeProvider.when('/', {
-        templateUrl: 'templates/home.html',
-        controller: 'HomeCtrl',
-        controllerAs: 'ctrl'
-    }).otherwise({
-        redirectTo: '/home'
-    });
+	$routeProvider.when('/', {
+		templateUrl: 'templates/home.html',
+		controller: 'HomeCtrl',
+		controllerAs: 'ctrl'
+	}).otherwise({
+		redirectTo: '/home'
+	});
 }]);
 
 },{"./controllers/HomeController.js":2,"./controllers/MainController.js":3,"./services/TestService.js":4}],2:[function(require,module,exports){
